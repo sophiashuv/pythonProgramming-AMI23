@@ -48,9 +48,28 @@ def generate_list_of_coprimes(n):
     return l
 
 
+def int_input():
+    """
+    The function that checks user's input and in case it's correct prints
+    pairs of coprime integers, otherwise user can try again to input and integer.
+    """
+    while True:
+        try:
+            n = int(input("Enter n (amount of pairs): "))
+            if n < 0:
+                print("Input must be a positive integer!")
+                continue
+        except ValueError:
+            print("Not an integer!")
+            continue
+
+        l = generate_list_of_coprimes(n)
+        print("Sequence of %d coprime pairs is: %s." % (n, l))
+        break
+
+
 if __name__ == "__main__":
-    n = int(input("Enter n (amount of pairs): "))
-    l = generate_list_of_coprimes(n)
-    print("Sequence of %d coprime pairs is: %s." % (n, l))
+    int_input()
 
     doctest.testmod()
+
