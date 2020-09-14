@@ -46,8 +46,8 @@ def int_input():
     while True:
         try:
             n = int(input("Enter amount of cubes(n): "))
-            if n < 0:
-                print("Input must be a positive integer!")
+            if n < 1 or n > 100:
+                print("Input must be a positive integer [1, 100]!")
                 continue
         except ValueError:
             print("Not an integer!")
