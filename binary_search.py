@@ -23,8 +23,8 @@ def check_left(array, mid, start):
     while mid + i > start and array[mid] == array[mid - i]:
         lst.append(mid - i)
         i += 1
-    message += "Check left " + str(i + 1) + " times.\n"
-    ind += i + 1
+    message += "Check left " + str(i) + " times.\n"
+    ind += i
 
 
 def check_right(array, mid, end):
@@ -33,11 +33,11 @@ def check_right(array, mid, end):
     """
     global ind, lst, message
     i = 1
-    while mid + i < end and array[mid] == array[mid + i]:
+    while mid + i <= end and array[mid] == array[mid + i]:
         lst.append(mid + i)
         i += 1
-    message += "Check right " + str(i + 1) + " times.\n"
-    ind += i + 1
+    message += "Check right " + str(i) + " times.\n"
+    ind += i
 
 
 def binary_search(array, element, start, end):
