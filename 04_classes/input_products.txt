@@ -1,5 +1,5 @@
 Yogurt, image_url1.jpg, 90, 2020-04ро-09, 2020-05-09, description1
-juice, image_url2.jpg, 67, 2020-08-09, 2020-10-07, description1
+juice, image_url2.jpg, 67.8976, 2020-08-09, 2020-10-07, description1
 Juice, image_url5.png, 90, 2020-05-10, 2020-06-09, description1
 apple, image_url6.txt, 7, 2019-04-09, 2020-05-09лодл, description1
 apple365, image_url3.jpg, 345, 2020-04-09, 2020-05-09, description1

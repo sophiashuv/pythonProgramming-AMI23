@@ -49,11 +49,20 @@ class LstCollection:
         f = open(file_name, "r")
         for i, line in enumerate(f):
             try:
-                line = line.split(", ")
+                line = list(line.split(", "))
                 u_id = uuid.uuid4()
+                # line.append(str(u_id))
+                # k = [i for i in Product.__dict__.keys() if not i.startswith('__')
+                #     and not i.startswith('_') and i != "input_product"]
+                # k.append("description").append("u_id")
+                # print(len(k), len(line))
+                # kk = dict(zip(k, line))
+                # print(kk)
+                # p = Product(**kk)
                 title, image_url, price, created_at, updated_at, description = line
                 self.lst.append(Product(title=title, image_url=image_url, price=price, created_at=created_at,
                                         updated_at=updated_at, description=description, u_id=u_id))
+                # self.lst.append(p)
             except ValueError as e:
                 print("Line" + str(i+1) + ": " + str(e))
                 continue

@@ -1,5 +1,5 @@
-
 from datetime import datetime
+import re
 
 
 class Validation:
@@ -14,10 +14,12 @@ class Validation:
     @staticmethod
     def validatePrice(value):
         try:
-            float(value)
+            v = float(value)
+            if re.match(r'[0-9]*\.[0-9]{2}', value):
+                raise ValueError("Price must have two digits after coma.")
         except ValueError:
-            raise ValueError("Price must be float of int.")
-        return float(value)
+            raise ValueError("Price must be float of int and must have two digits after coma!")
+        return v
 
     @staticmethod
     def validateDate(date):
