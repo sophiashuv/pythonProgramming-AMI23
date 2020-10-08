@@ -60,3 +60,7 @@ class Validation:
                 print(e)
                 print("Try one more time!")
                 continue
+            except FileNotFoundError as e:
+                print(e)
+                print("Try one more time!")
+                continue
