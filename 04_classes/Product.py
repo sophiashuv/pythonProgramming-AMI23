@@ -53,6 +53,7 @@ class Product(object):
     def __get_dictionary(self):
         return dict((name, getattr(self, name)) for name in dir(self) if not name.startswith('__')
                     and not name.startswith('_') and name != "input_product")
+
     @staticmethod
     def input_product(*args):
         d = dict((prop, input(prop + " : ")) for prop in args)

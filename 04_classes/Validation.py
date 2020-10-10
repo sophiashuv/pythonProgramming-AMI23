@@ -39,9 +39,9 @@ class Validation:
             raise ValueError("Incorrect data, created_at must be lover than updated_at.")
 
     @staticmethod
-    def validateTxtFileName(filename, end=".txt"):
+    def validateFileName(filename, end=".txt"):
         if not filename.endswith(end):
-            raise ValueError("Incorrect filename, should end with .txt.")
+            raise ValueError("Incorrect filename, should end with ." + end + ".")
         return filename
 
     @staticmethod

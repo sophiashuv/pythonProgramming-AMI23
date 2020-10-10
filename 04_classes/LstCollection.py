@@ -1,6 +1,7 @@
 from Validation import Validation
 from Product import Product
 import uuid
+import json
 
 
 class LstCollection:
@@ -44,39 +45,34 @@ class LstCollection:
             if str(p.u_id) == ID:
                 setattr(p, attr, val)
 
-    def read_file(self, file_name):
-        Validation.validateTxtFileName(file_name)
-        f = open(file_name, "r")
-        for i, line in enumerate(f):
+    def read_json_file(self, file_name):
+        Validation.validateFileName(file_name, "json")
+        f = open(file_name, encoding='utf-8')
+        file = json.load(f)
+        for i, product in enumerate(file):
             try:
-                line = list(line.split(", "))
-                u_id = uuid.uuid4()
-                # line.append(str(u_id))
-                # k = [i for i in Product.__dict__.keys() if not i.startswith('__')
-                #     and not i.startswith('_') and i != "input_product"]
-                # k.append("description").append("u_id")
-                # print(len(k), len(line))
-                # kk = dict(zip(k, line))
-                # print(kk)
-                # p = Product(**kk)
-                title, image_url, price, created_at, updated_at, description = line
-                self.lst.append(Product(title=title, image_url=image_url, price=price, created_at=created_at,
-                                        updated_at=updated_at, description=description, u_id=u_id))
-                # self.lst.append(p)
+                product["u_id"] = str(uuid.uuid4())
+                self.lst.append(Product(**product))
             except ValueError as e:
-                print("Line" + str(i+1) + ": " + str(e))
+                print("Line" + str(i * (len(product) + 1) + 3) + ": " + str(e))
                 continue
         f.close()
 
+    def write_in_json_file(self, file_name):
+        Validation.validateFileName(file_name, "json")
+        with open(file_name, 'w', encoding='utf-8') as outfile:
+            json.dump([ob.__dict__ for ob in self.lst], outfile, ensure_ascii=False)
+        outfile.close()
+
     def write_in_file(self, file_name, mode="w"):
-        Validation.validateTxtFileName(file_name)
+        Validation.validateFileName(file_name)
         f = open(file_name, mode=mode, encoding="utf-8")
         f.writelines(str(i) + "\n" for i in self.lst)
         f.close()
 
     @staticmethod
     def add_el_to_file(file_name, element):
-        Validation.validateTxtFileName(file_name)
+        Validation.validateFileName(file_name)
         f = open(file_name, mode="a", encoding="utf-8")
         f.write(str(element))
         f.close()
