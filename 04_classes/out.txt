@@ -1,0 +1,27 @@
+Product:
+created_at : '2020-04-09'
+description : 'description1'
+image_url : 'image_url4.jpg'
+price : '67.0'
+title : 'ice cream'
+u_id : '29c8b855-eef0-40b7-a146-ec56cb05002e'
+updated_at : '2020-05-09'
+
+Product:
+created_at : '2020-01-09'
+description : 'description1'
+image_url : 'image_url7.jpg'
+price : '83.0'
+title : 'milk'
+u_id : '421fc316-188c-4b79-998e-7b64e3ae6c70'
+updated_at : '2020-05-09'
+
+Product:
+created_at : '2020-04-09'
+description : 'description1'
+image_url : 'image_url78.jpg'
+price : '500.0'
+title : 'milk'
+u_id : '3bdec687-0e77-45f2-9424-e6941b01d6a8'
+updated_at : '2020-05-09'
+
