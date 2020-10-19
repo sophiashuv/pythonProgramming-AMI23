@@ -33,3 +33,4 @@ class SecondStrategy(Strategy):
                 for x in line.split():
                     data.insert(int(x), pos)
                     pos += 1
+        infile.close()
