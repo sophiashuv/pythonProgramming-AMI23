@@ -3,7 +3,7 @@ from Validation import Validation
 
 class Memento:
     """
-
+    Class for Memento representation
     """
     def __init__(self, lst, ms) -> None:
         self._lst = lst
@@ -17,7 +17,9 @@ class Memento:
 
 
 class Caretaker:
-
+    """
+    Class for Caretaker representation
+    """
     SIZE = 6
 
     def __init__(self, lst) -> None:
@@ -56,4 +58,3 @@ class Caretaker:
         for i, memento in enumerate(self._mementos):
             print(str(i + 1) + ". " + memento.get_name())
         print("You're on " + str(self._current) + " moment.")
-
