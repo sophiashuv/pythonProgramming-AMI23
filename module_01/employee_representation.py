@@ -78,13 +78,13 @@ def read_json_file(lst, file_name="data.json"):
 @Validation.validate_inp
 def read_file(l):
     file_name = input("Enter FileName: ")
-    read_json_file(l)
+    read_json_file(l, file_name)
+
 
 @Validation.validate_inp
 def addEmployee(l):
 
     d = Employee.input_product("Name", "FirstWorkingDate", "LastWorkingDate", "Salary")
-    # d["PricePerDay"] = price
     d = Employee(**d)
     l.append(Validation.validateDiapazonWrapper(l, d))
 
@@ -94,6 +94,7 @@ def comp_price(l):
     for i in l:
         sum += i.pricePer()
     return sum
+
 
 @Validation.validateFileName('.txt')
 def write_in_txt_file(L, file_name="hj.txt"):
@@ -123,6 +124,7 @@ def write_file(l):
 def print_lst(l):
     for i in l:
         print(i)
+
 
 if __name__ == "__main__":
     menu()
