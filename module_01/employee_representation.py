@@ -77,7 +77,7 @@ def read_json_file(lst, file_name="data.json"):
 
 @Validation.validate_inp
 def read_file(l):
-    # file_name = input("Enter FileName: ")
+    file_name = input("Enter FileName: ")
     read_json_file(l)
 
 @Validation.validate_inp
@@ -86,7 +86,7 @@ def addEmployee(l):
     d = Employee.input_product("Name", "FirstWorkingDate", "LastWorkingDate", "Salary")
     # d["PricePerDay"] = price
     d = Employee(**d)
-    l.append(Validation.validateDiapazonWrapper(l, d, date1="27.10.2019", date2="5.11.2019"))
+    l.append(Validation.validateDiapazonWrapper(l, d))
 
 
 def comp_price(l):

@@ -81,18 +81,14 @@ class Validation:
 
 
     @staticmethod
-    def validateDiapazonWrapper(L, b, date1, date2):
-        day, month, year = date1.split(".")
-        date1 = Date(day, month, year)
-        day, month, year = date2.split(".")
-        date2 = Date(day, month, year)
+    def validateDiapazonWrapper(L, b):
         res = {}
         for v in L:
             try:
                 res[str(v.FirstWorkingDate.month) + "." + str(v.FirstWorkingDate.year)] += 1
             except KeyError:
                 res[str(v.FirstWorkingDate.month) + "." + str(v.FirstWorkingDate.year)] = 1
-        print(res)
+
         try:
             res[str(b.FirstWorkingDate.month) + "." + str(b.FirstWorkingDate.year)] += 1
         except KeyError:
