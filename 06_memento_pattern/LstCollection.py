@@ -3,6 +3,7 @@ from Product import Product
 import uuid
 import json
 from memento import *
+import copy
 
 class LstCollection():
     """ Class for Collection on list representation."""
@@ -71,7 +72,7 @@ class LstCollection():
         outfile.close()
 
     @Validation.validateFileName(end='.txt')
-    def write_in_file(self, file_name, mode="w"):
+    def write_in_file(self, file_name, mode="w+"):
         f = open(file_name, mode=mode, encoding="utf-8")
         f.writelines(str(i) + "\n" for i in self.lst)
         f.close()
@@ -84,7 +85,7 @@ class LstCollection():
         f.close()
 
     def save(self, ms) -> Memento:
-        k = self.lst.copy()
+        k = copy.deepcopy(self.lst)
         return Memento(k, ms)
 
     def restore(self, memento: Memento) -> None:

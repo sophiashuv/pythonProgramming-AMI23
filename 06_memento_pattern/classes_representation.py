@@ -8,6 +8,7 @@ def menu():
     """
     The menu function.
     """
+
     p = LstCollection()
     caretaker = Caretaker(p)
     caretaker.backup("Empty collection.")
@@ -21,17 +22,22 @@ def menu():
         elif task == "2":
             sort_elements(p)
             caretaker.backup("Sort elements.")
+            write_in_json_file(p)
         elif task == "3":
             search_elements(p)
+            write_in_json_file(p)
         elif task == "4":
             add_product(p)
             caretaker.backup("Add Product to collection.")
+            write_in_json_file(p)
         elif task == "5":
             del_product(p)
             caretaker.backup("Del element from collection.")
+            write_in_json_file(p)
         elif task == "6":
             edit_product(p)
             caretaker.backup("Edit element from collection.")
+            write_in_json_file(p)
         elif task == "7":
             write_in_txt_file(p)
         elif task == "8":
@@ -41,12 +47,16 @@ def menu():
                 print(product)
         elif task == "undo":
             undo_moment(caretaker)
+            write_in_json_file(p)
         elif task == "redo":
             redo_moment(caretaker)
+            write_in_json_file(p)
         elif task == "move":
             move_moment(caretaker)
+            write_in_json_file(p)
         elif task == "history":
             caretaker.show_history()
+            write_in_json_file(p)
         elif task == "exit":
             print("GOODBYE!")
             break
@@ -79,9 +89,12 @@ def get_help_message():
     help_message += "*" * 51 + "\n"
     return help_message
 
+
 @Validation.validate_inp
 def read_json_file(p):
-    p.read_json_file((input("Enter file_name: ")))
+    global file_name
+    file_name = input("Enter file_name: ")
+    p.read_json_file(file_name)
 
 @Validation.validate_inp
 def sort_elements(p):
@@ -113,7 +126,7 @@ def write_in_txt_file(p):
 
 @Validation.validate_inp
 def write_in_json_file(p):
-    p.write_in_json_file(input("Enter file_name: "), "json")
+    p.write_in_json_file(file_name)
 
 @Validation.validate_inp
 def undo_moment(c):
