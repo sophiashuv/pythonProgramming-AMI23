@@ -10,9 +10,9 @@ def menu():
     """
     l = LinkedList()
     obs = Observer()
-    obs.observe('Add', Logger.write_to_file)
-    obs.observe('Remove', Logger.write_to_file)
-    obs.observe('Change', Logger.write_to_file)
+    obs.observe('Add')
+    obs.observe('Remove')
+    obs.observe('Change')
 
     while True:
         help_message = get_help_message()
