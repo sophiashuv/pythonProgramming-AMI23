@@ -2,7 +2,7 @@ import unittest
 from Product import Product
 from LstCollection import LstCollection
 from memento import *
-
+import os
 
 class TestLstCollection(unittest.TestCase):
 
@@ -170,6 +170,8 @@ class TestLstCollection(unittest.TestCase):
         self.test_lst.write_in_json_file('test.json')
         self.test_empty_lst.read_json_file('test.json')
         self.assertEqual(len(self.test_empty_lst), 4)
+
+        os.remove("test.json")
 
 
 if __name__ == '__main__':
