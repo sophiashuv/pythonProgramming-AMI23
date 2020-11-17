@@ -5,6 +5,7 @@ from Strategy import *
 from Validation import Validation
 from Observer import *
 from Thread import ExceptionThread
+import time
 
 
 def menu():
@@ -38,7 +39,9 @@ def menu():
         elif task == "6":
             list_method(l_strategy1, l_strategy2)
         elif task == "7":
-            create_thread(print, print, (l_strategy1,), (l_strategy2,))
+            p1 = ExceptionThread(name='Strategy1 list', target=print, args=(l_strategy1,))
+            p2 = ExceptionThread(name='Strategy2 list', target=print, args=(l_strategy2,))
+            thread_function([p1, p2])
         elif task == "8":
             print("GOODBYE!")
             break
@@ -48,15 +51,11 @@ def menu():
         print()
 
 
-def create_thread(f1, f2, args1=(), args2=()):
-    p1 = ExceptionThread(name='Strategy1 list', target=f1, args=args1)
-    p2 = ExceptionThread(name='Strategy2 list', target=f2, args=args2)
-
-    p1.start()
-    p2.start()
-
-    p1.join()
-    p2.join()
+def thread_function(treads_list):
+    for p in treads_list:
+        p.start()
+        time.sleep(2)
+        p.join()
 
 
 @Validation.validate_inp
@@ -83,7 +82,9 @@ def del_index(l1, l2):
     index = Validation.validateInt(input("Enter index to delete: "))
     b_l1 = copy.deepcopy(l1)
     b_l2 = copy.deepcopy(l2)
-    create_thread(l1.delete_index, l2.delete_index, (index,), (index,))
+    p1 = ExceptionThread(name='Strategy1 list', target=l1.delete_index, args=(index,))
+    p2 = ExceptionThread(name='Strategy2 list', target= l2.delete_index, args=(index,))
+    thread_function([p1, p2])
     Event("Remove", l1, b_l1, index)
     Event("Remove", l1, b_l2, index)
 
@@ -97,7 +98,9 @@ def del_between_indexes(l1, l2):
         tuple(map(Validation.validateInt, input("Enter index1 and index2: ").split())))
     b_l1 = copy.deepcopy(l1)
     b_l2 = copy.deepcopy(l2)
-    create_thread(l1.delete_between_pos, l2.delete_between_pos, (index1, index2), (index1, index2))
+    p1 = ExceptionThread(name='Strategy1 list', target=l1.delete_between_pos, args=(index1, index2))
+    p2 = ExceptionThread(name='Strategy2 list', target=l2.delete_between_pos, args=(index1, index2))
+    thread_function([p1, p2])
     Event("Remove", l1, b_l1, (index1, index2))
     Event("Remove", l2, b_l2, (index1, index2))
 
@@ -105,7 +108,9 @@ def del_between_indexes(l1, l2):
 def list_method(l1, l2):
     b_l1 = copy.deepcopy(l1)
     b_l2 = copy.deepcopy(l2)
-    create_thread(l1.listMethod, l2.listMethod)
+    p1 = ExceptionThread(name='Strategy1 list', target=l1.listMethod)
+    p2 = ExceptionThread(name='Strategy2 list', target=l2.listMethod)
+    thread_function([p1, p2])
     Event("Change", l1, b_l1)
     Event("Change", l2, b_l2)
 
