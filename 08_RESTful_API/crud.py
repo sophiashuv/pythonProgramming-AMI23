@@ -111,10 +111,10 @@ def post_update(id):
     if not product:
         return abort(404, "Product not find.")
     try:
-        product._title = request.json['title']
-        product._price = request.json['price']
-        product._created_at = request.json['created_at']
-        product._updated_at = request.json['updated_at']
+        product.title = request.json['title']
+        product.price = request.json['price']
+        product.created_at = request.json['created_at']
+        product.updated_at = request.json['updated_at']
         product.description = request.json['description']
         db.session.commit()
     except Exception as e:
@@ -127,3 +127,4 @@ if __name__ == '__main__':
     db.create_all()
     db.session.commit()
     app.run(debug=True, host='127.0.0.1')
+    
