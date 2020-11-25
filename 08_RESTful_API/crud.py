@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from sqlalchemy.inspection import inspect
+from sqlalchemy import cast, desc
 import os
 import json
 
@@ -68,23 +70,30 @@ def posts():
     sort_by = request.args.get('sort_by')
     sort_type = request.args.get('sort_type')
     s = request.args.get('s')
-    products = Product.query.all()
-    products = products_schema.dump(products)
+    products = Product.query
     sort_type = 'desc' if sort_type is None else sort_type
 
     if sort_by is not None:
         try:
             if sort_type == "asc":
-                products = sorted(products, key=lambda k: k[sort_by])
+                products = products.order_by(sort_by)
+                # products = sorted(products, key=lambda k: k[sort_by])
             else:
-                products = sorted(products, key=lambda k: k[sort_by], reverse=True)
+                products = products.order_by(desc(sort_by))
+                # products = sorted(products, key=lambda k: k[sort_by], reverse=True)
 
         except Exception as e:
             return abort(404, e)
 
     if s is not None:
-        products = [product for product in products for value in product.values() if s in str(value)]
+        b = Product._title.like('%' + s + '%')
+        for column in inspect(Product).c:
+             b |= cast(getattr(Product, column.name), db.String).like('%' + s + '%')
 
+        products = products.filter(b)
+        # products = [product for product in products for value in product.values() if s in str(value)]
+
+    products = products_schema.dump(products)
     return jsonify({'products': products})
 
 
@@ -127,4 +136,4 @@ if __name__ == '__main__':
     db.create_all()
     db.session.commit()
     app.run(debug=True, host='127.0.0.1')
-    
+
