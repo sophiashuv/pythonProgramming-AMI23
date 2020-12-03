@@ -121,9 +121,9 @@ def register():
         if request.method == 'POST':
             hashed_password = hashlib.sha256(form['password'].encode('utf-8')).hexdigest()
             new_user = User(
-                _last_name=form["last_name"],
-                _first_name=form["first_name"],
-                _email=form["email"],
+                last_name=form["last_name"],
+                first_name=form["first_name"],
+                email=form["email"],
                 password=hashed_password)
 
             db.session.add(new_user)
