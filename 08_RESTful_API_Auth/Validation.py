@@ -97,9 +97,7 @@ class Validation:
     @staticmethod
     def validateMail(func):
         def validateMailWrapper(_self, val):
-            regexSrch = re.search(
-                r"[^@]+@[^@]+\.[^@]+", val)
-            if regexSrch is None:
+            if not re.match(r"[^@]+@[^@]+\.[^@]+", val):
                 raise ValueError('Incorrect Email')
             func(_self, val)
         return validateMailWrapper

@@ -1,3 +1,5 @@
+from passlib.hash import pbkdf2_sha256 as sha256
+
 from Validation import Validation
 
 
@@ -30,7 +32,7 @@ class User(object):
         return self._email
 
     @email.setter
-    @Validation.validateStr
+    @Validation.validateMail
     def email(self, value):
         self._email = value
 
