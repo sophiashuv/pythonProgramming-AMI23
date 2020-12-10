@@ -34,8 +34,7 @@ def register():
             last_name=form["last_name"],
             first_name=form["first_name"],
             email=form["email"],
-            password=hashed_password,
-            role=form["role"])
+            password=hashed_password)
 
         db.session.add(new_user)
         db.session.commit()
@@ -43,7 +42,7 @@ def register():
         return user_schema.jsonify(new_user), 201
 
     except Exception as e:
-        return jsonify(status="404", errors=str(e)), 404
+        return jsonify(status="404", errors=str(e)), 400
 
 
 """ TODO """
@@ -203,7 +202,9 @@ def create_order():
 @app.route('/api/orders', methods=['GET'])
 def orders():
     try:
-        orders = Order.query
+        verify_jwt_in_request()
+        claims = get_jwt_claims()
+        orders = Order.query.filter(Order.user_id == claims['id'])
         len_orders = len(products_schema.dump(orders))
         orders = products_schema.dump(orders)
         return jsonify({'products': orders},
@@ -215,7 +216,12 @@ def orders():
 @app.route('/api/orders/<id>', methods=['GET'])
 def order_detail(id):
     try:
+        verify_jwt_in_request()
+        claims = get_jwt_claims()
         order = Order.query.get_or_404(id)
-        return product_schema.jsonify(order), 201
+        if order.user_id == claims['id']:
+            return product_schema.jsonify(order), 201
+        else:
+            return jsonify(status='404', message="Id doesnt exist"), 404
     except Exception as e:
         return jsonify(status='404', message=str(e)), 404
