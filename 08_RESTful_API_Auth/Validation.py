@@ -71,30 +71,6 @@ class Validation:
         return validateIntWrapper
 
     @staticmethod
-    def validateUndo(func):
-        def validateUndoWrapper(c):
-            if c._current < 2:
-                raise AttributeError('Impossible to undo.')
-            return func(c)
-        return validateUndoWrapper
-
-    @staticmethod
-    def validateRedo(func):
-        def validateRedoWrapper(c):
-            if c._current + 1 > len(c._mementos):
-                raise AttributeError('Impossible to redo.')
-            return func(c)
-        return validateRedoWrapper
-
-    @staticmethod
-    def validateMove(func):
-        def validateMoveWrapper(c, moment):
-            if 0 > moment or moment > len(c._mementos):
-                raise AttributeError('Possible moments 1 - ' + str(len(c._mementos)) + ".")
-            return func(c, moment)
-        return validateMoveWrapper
-
-    @staticmethod
     def validateMail(func):
         def validateMailWrapper(_self, val):
             if not re.match(r"[^@]+@[^@]+\.[^@]+", val):

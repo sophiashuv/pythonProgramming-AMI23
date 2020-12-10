@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, abort, request, flash
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 from flask_jwt_extended import JWTManager
@@ -21,7 +21,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = DB_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = '!9m@S-dThyIlW[pHQbN^'
 
-# app.config['JWT_SECRET_KEY'] = 'Dude!WhyShouldYouEncryptIt'
 app.config['JWT_BLACKLIST_ENABLED'] = False
 app.config['JWT_BLACKLIST_TOKEN_CHECKS'] = ['access', 'refresh']
 
