@@ -1,0 +1,77 @@
+
+created_at: 2020-04-09
+description: description1
+image_url: image_url1.jpg
+price: 90
+title: Yogurt
+updated_at: 2020-05-09
+=
+created_at: 2020-04-09
+description: description1
+image_url: image_url2.jpg
+price: 67.8976
+title: juice
+updated_at: 2020-05-09
+=
+created_at: 2020-05-10
+description: description1
+image_url: image_url5.png
+price: 67.0
+title: Juice
+updated_at: 2020-05-09
+=
+created_at: 2020-04-09
+description: description1
+image_url: image_url4.jpg
+price: 67.0
+title: ice cream
+updated_at: 2020-05-09
+=
+created_at: 2020-04-09
+description: description1
+image_url: image_url6.txt
+price: "7"
+title: apple
+updated_at: 2020-05-09лодл
+=
+created_at: 2020-04-09
+description: description1
+image_url: image_url3.jpg
+price: 67.0
+title: apple365
+updated_at: 2020-05-09
+=
+created_at: 2020-01-09
+description: description1
+image_url: image_url7.jpg
+price: 83
+title: milk
+updated_at: 2020-05-09
+=
+created_at: 2019-04-09
+description: description1
+image_url: image_url8.txt
+price: 7
+title: Yogurt
+updated_at: 2020-07-09
+=
+created_at: 2020-04-09
+description: description1
+image_url: image_url3.jpg
+price: 67.0
+title: apple365
+updated_at: 2020-05-09
+=
+created_at: 2020-04-09
+description: description1
+image_url: image_url9.jpg
+price: 90
+title: tomato
+updated_at: 2020-03-09
+=
+created_at: 2020-04-09
+description: description1
+image_url: image_url78.jpg
+price: 500
+title: milk
+updated_at: 2020-05-09
