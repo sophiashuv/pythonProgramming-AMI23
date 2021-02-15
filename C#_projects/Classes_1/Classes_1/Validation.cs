@@ -20,8 +20,7 @@ namespace Classes_1
         }
         
         public static double ValidatePrice(double value)
-        { 
-            if (value == 0) return value;
+        {
             string strValue = value.ToString(CultureInfo.InvariantCulture).
                 IndexOf(".", StringComparison.Ordinal) == -1 ? value.ToString(CultureInfo.InvariantCulture) 
                                                                + "." : value.ToString(CultureInfo.InvariantCulture);

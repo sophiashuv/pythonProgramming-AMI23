@@ -10,7 +10,6 @@ namespace Classes_1
 {
     public class LstCollection
         /* Class for Collection on list representation. */
-
     {
         private List<Product> lst;
 
@@ -42,8 +41,14 @@ namespace Classes_1
 
         public LstCollection Sort(string field)
         {
-            try { this.lst = lst.OrderBy(e => e.GetType().GetProperty(field).GetValue(e, null)).ToList(); }
-            catch (Exception) {throw new ArgumentException("Wrong Field name!");}
+            try
+            {
+                this.lst = lst.OrderBy(e => e.GetType().GetProperty(field).GetValue(e, null)).ToList();
+            }
+            catch (Exception)
+            {
+                throw new ArgumentException("Wrong Field name!");
+            }
             return this;
         }
 
@@ -55,7 +60,6 @@ namespace Classes_1
                     if (prop.GetValue(e).ToString().Contains(subStr)) return true;
                 return false;
             }
-
             var filtered = Validation.ValidateSearch(lst.FindAll(SearchPredicater));
             return filtered;
         }
@@ -82,34 +86,36 @@ namespace Classes_1
         {
             var fileData = System.IO.File.ReadAllText(fileName).Split('=').ToList();
             foreach (var strObject in fileData) {
-                try
+                Product p = new Product();
+                bool b = false;
+                var lstObjects = strObject.Substring(1, strObject.Length - 2).Split('\n').ToList();
+                foreach (var field in lstObjects)
                 {
-                    Product p = new Product();
-                    var lstObjects = strObject.Substring(1, strObject.Length - 2).
-                        Split('\n').ToList();
-                    foreach (var field in lstObjects)
+                    try
                     {
                         var fieldValue = field.Split(':').ToList();
-                        PropertyInfo propertyInfo = p.GetType().GetProperty(char.
-                            ToUpper(fieldValue[0][0]) + fieldValue[0].Substring(1));
-                        propertyInfo.SetValue(p,
-                            Convert.ChangeType(fieldValue[1].Substring(1), propertyInfo.PropertyType), null);
+                        PropertyInfo propertyInfo = p.GetType().GetProperty(char.ToUpper(fieldValue[0][0]) + fieldValue[0].Substring(1));
+                        propertyInfo.SetValue(p, Convert.ChangeType(fieldValue[1].Substring(1), propertyInfo.PropertyType), null);
                     }
-                    if (string.IsNullOrEmpty(p.Id)) p.Id = Guid.NewGuid().ToString();
-                    this.AddItem(p);
+                    catch (Exception e)
+                    {
+                        try
+                        {
+                            Console.WriteLine($"--{e.InnerException.Message}");
+                            b = true;
+                        }
+                        catch (Exception) {Console.WriteLine($"--{e.Message}");}
+                    }
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"--{e.InnerException.Message}");
-                    continue;
-                }
+                if (string.IsNullOrEmpty(p.Id)) p.Id = Guid.NewGuid().ToString();
+                if (!b) this.AddItem(p);
             }
             return this;
         }
         
         public void WriteTxtFile(string fileName)
         {
-            using(TextWriter tw = new StreamWriter(fileName)) tw.WriteLine(this);
+            using (TextWriter tw = new StreamWriter(fileName)) tw.WriteLine(this);
         }
         
         public void AddToTxtFile(string fileName)
@@ -128,6 +134,7 @@ namespace Classes_1
                     try
                     {
                         Product p = JsonConvert.DeserializeObject<Product>(JsonConvert.SerializeObject( v ));
+                        if (string.IsNullOrEmpty(p.Id)) p.Id = Guid.NewGuid().ToString();
                         this.AddItem(p);
                     }
                     catch (Exception e) { Console.WriteLine($"--{e.InnerException.Message}"); }

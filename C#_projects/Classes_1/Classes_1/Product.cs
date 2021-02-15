@@ -5,16 +5,8 @@ namespace Classes_1
     public class Product
     /* Class for Product representation. */
     {
-        private string id, created_at, updated_at, title, image_url, description;
+        private string id,title, created_at, updated_at, image_url, description;
         private double price;
-
-        public Product()
-        {
-            foreach (PropertyDescriptor prop in TypeDescriptor.GetProperties(this))
-                prop.SetValue(this, Convert.ChangeType("0", prop.PropertyType));
-            
-            this.Id = Guid.NewGuid().ToString();
-        }
 
         public Product InputProduct()
         {
@@ -25,6 +17,7 @@ namespace Classes_1
                     Console.Write($"{prop.Name}: ");
                     prop.SetValue(this, Convert.ChangeType(Console.ReadLine(), prop.PropertyType));
                 }
+                this.Id = Guid.NewGuid().ToString();
             }
             return this;
         }
@@ -68,6 +61,5 @@ namespace Classes_1
                 res += ($"{prop.Name}: {prop.GetValue(this)}\n");
             return res.Substring(0, res.Length-1);
         }
-
     }
 }
