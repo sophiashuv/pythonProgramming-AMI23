@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace task02_Generics
 {
-    public class BaseClass
+    public abstract class  BaseClass
         /* Class for BaseClass representation. */
     {
         public string Id { get; set; }
