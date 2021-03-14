@@ -54,8 +54,8 @@ namespace API_03.Models
             var search = productParameters.Search;
             var sort_type = productParameters.Sort_type;
             var sort_by = productParameters.Sort_by;
-            var size = productParameters.PageSize;
-            var offset = productParameters.Offset;
+            var size = productParameters.Limit;
+            var offset = (productParameters.Offset - 1) * size;
            
             if (search != null)
             {
