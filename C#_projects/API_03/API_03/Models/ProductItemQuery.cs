@@ -79,7 +79,7 @@ namespace API_03.Models
             {
                 cmd.CommandText = cmd.CommandText + " OFFSET " + offset;
             }
-            cmd.CommandText += "; SELECT COUNT(*) FROM product;";
+            cmd.CommandText += ";";
 
             return await ReadAllAsync(await cmd.ExecuteReaderAsync());
         }
