@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 using API_03.Controllers;
 using MySqlConnector;
 
+
 namespace API_03.Models
 {
     public class ProductItemQuery
     {
         public AppDb Db { get; }
 
+
         public ProductItemQuery(AppDb db)
         {
             Db = db;
         }
+
 
         public async Task<ProductItem> FindOneAsync(int id)
         {
@@ -31,6 +34,19 @@ namespace API_03.Models
             return result.Count > 0 ? result[0] : null;
         }
 
+
+        public async Task<int> GetCount()
+        {
+            using var cmd = Db.Connection.CreateCommand();
+            cmd.CommandText = @"SELECT COUNT(*) FROM product;";
+            MySqlDataReader rdr = cmd.ExecuteReader();
+
+            while (await rdr.ReadAsync())
+                return rdr.GetInt32(0);
+            return 0;
+        }
+
+
         public async Task<List<ProductItem>> GetAllProducts(ProductParameters productParameters)
         {
             using var cmd = Db.Connection.CreateCommand();
@@ -40,6 +56,7 @@ namespace API_03.Models
             var sort_by = productParameters.Sort_by;
             var size = productParameters.PageSize;
             var offset = productParameters.Offset;
+           
             if (search != null)
             {
                 cmd.CommandText = cmd.CommandText +
@@ -62,8 +79,8 @@ namespace API_03.Models
             {
                 cmd.CommandText = cmd.CommandText + " OFFSET " + offset;
             }
-            cmd.CommandText = cmd.CommandText + ";";
-            Console.WriteLine(cmd.CommandText);
+            cmd.CommandText += "; SELECT COUNT(*) FROM product;";
+
             return await ReadAllAsync(await cmd.ExecuteReaderAsync());
         }
 
@@ -77,8 +94,10 @@ namespace API_03.Models
             await txn.CommitAsync();
         }
 
+
         private async Task<List<ProductItem>> ReadAllAsync(DbDataReader reader)
         {
+           
             var posts = new List<ProductItem>();
             using (reader)
             {

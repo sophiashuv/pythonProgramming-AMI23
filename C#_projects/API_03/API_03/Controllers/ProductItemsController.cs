@@ -24,15 +24,14 @@ namespace API_03.Controllers
 
 
         // GET: api/ProductItems
-        [LightQuery(forcePagination: true, defaultPageSize: 3)]
-        [ProducesResponseType(typeof(IEnumerable<ProductItem>), 200)]   // Not working
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProductItem>>> GetProductItems([FromQuery] ProductParameters productParameters)
         { 
             await Db.Connection.OpenAsync();
             var query = new ProductItemQuery(Db);
             var result = await query.GetAllProducts(productParameters);
-            return new OkObjectResult(result);
+            var count = await query.GetCount();
+            return Ok(new Responce<ProductItem>(result, count));
         }
 
 
