@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Linq;
 
@@ -7,96 +8,77 @@ namespace API_03.Models
     public static class Validation
     {
 
-        public static string ValidateTitle(string value)
+        public class TitleAttribute : ValidationAttribute
         {
-            try
+            public override bool IsValid(object value)
             {
-                if (value == "0") return value;
-                if (value.Any(char.IsDigit))
+                string strValue = value as string;
+                if (strValue.Any(char.IsDigit))
                 {
-                    throw new ArgumentException("Title must not contain integers.");
+                    ErrorMessage = "Title must not contain integers.";
+                    return false;
                 }
-                return value;
-            }
-            catch (Exception)
-            {
-                return null;
+                return true;
             }
         }
 
-        public static double ValidatePrice(double value)
-        {
-            try
-            {
-                value = Math.Round(value, 2);
 
-                string strValue = value.ToString(CultureInfo.InvariantCulture).
-                    IndexOf(".", StringComparison.Ordinal) == -1 ? value.ToString(CultureInfo.InvariantCulture)
-                                                                   + "." : value.ToString(CultureInfo.InvariantCulture);
+        public class Image_urlAttribute : ValidationAttribute
+        {
+            public override bool IsValid(object value)
+            {
+                string strValue = value as string;
+                string[] validImageExtensions = { ".jpg", ".jpeg", ".png", ".gif" };
+                if (!validImageExtensions.Any(strValue.EndsWith))
+                {
+                    ErrorMessage = "Incorrect image_url.";
+                    return false;
+                }
+                return true;
+            }
+        }
+
+
+        public class PriceAttribute : ValidationAttribute
+        {
+            public override bool IsValid(object value)
+            {
+                double dValue = ((IConvertible)value).ToDouble(null);
+                string strValue = dValue.ToString(CultureInfo.InvariantCulture).
+               IndexOf(".", StringComparison.Ordinal) == -1 ? dValue.ToString(CultureInfo.InvariantCulture)
+                                                              + "." : dValue.ToString(CultureInfo.InvariantCulture);
+
                 if (strValue.Substring(strValue.IndexOf(".", StringComparison.Ordinal)).Length > 3)
                 {
-                    throw new ArgumentException("Price must have two digits after coma.");
+                    ErrorMessage = "Price must have two digits after coma.";
+                    return false;
                 }
-
-                return value;
-            }
-            catch (Exception)
-            {
-                return 0;
-            }
-}
-
-        public static string ValidateDate(string value)
-        {
-            try { 
-                if (value == "0") return value;
-                DateTime v = DateTime.Parse(value);
-                if (DateTime.Compare(DateTime.Now, v) < 0)
-                {
-                    throw new ArgumentException("Non-existent Date.");
-                }
-                return v.ToString("yyyy-MM-dd");
-            }
-            catch (Exception)
-            {
-                return null;
+                return true;
             }
         }
 
-        public static string ValidateDate(string value1, string value2)
+
+        public class DateAttribute : ValidationAttribute
         {
-            try
+            public override bool IsValid(object value)
             {
-                if (value2 == "0") return value2;
-                DateTime v1 = DateTime.Parse(value1);
-                DateTime v2 = DateTime.Parse(value2);
-                if (DateTime.Compare(v1, v2) > 0)
+                string strValue = value as string;
+                try
                 {
-                    throw new ArgumentException("Incorrect data, created_at must be lover than updated_at.");
+                    DateTime v = DateTime.Parse(strValue);
+                    if (DateTime.Compare(DateTime.Now, v) < 0)
+                    {
+                        ErrorMessage = "Non-existent Date.";
+                        return false;
+                    }
+                    return true;
                 }
-                return ValidateDate(value2);
-            }
-            catch (Exception)
-            {
-                return null;
+                catch (Exception e)
+                {
+                    ErrorMessage = e.Message;
+                    return false;
+                }
             }
         }
-
-        public static string ValidateImage_url(string value)
-        {
-            try { 
-                if (value == "0") return value;
-                string[] validImageExtensions = { ".jpg", ".jpeg", ".png", ".gif" };
-                if (!validImageExtensions.Any(value.EndsWith))
-                {
-                    throw new ArgumentException("Incorrect image_url.");
-                }
-                return value;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }    
-    }
+    }     
 }
